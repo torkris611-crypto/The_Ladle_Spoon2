@@ -1,0 +1,69 @@
+{
+  "last_updated": "2024-03-12T10:30:00",
+  "settings": {
+    "auto_blacklist": true,
+    "missed_pickups_limit": 3,
+    "ban_duration_days": 30,
+    "warning_message": "Вы пропустили получение заказа. После {limit} неявок доступ будет заблокирован"
+  },
+  "blacklisted_users": [
+    {
+      "user_id": 555555555,
+      "telegram_id": 555555555,
+      "username": "bad_user",
+      "name": "Петр Нехороший",
+      "reason": "3 неявки подряд",
+      "missed_pickups": 3,
+      "total_orders": 2,
+      "banned_at": "2024-03-01T14:30:00",
+      "banned_until": "2024-03-31T14:30:00",
+      "banned_by": 111946301,
+      "notes": "Игнорировал предупреждения"
+    },
+    {
+      "user_id": 666666666,
+      "telegram_id": 666666666,
+      "username": "spammer",
+      "name": "Сергей Спамер",
+      "reason": "Оскорбления в отзывах",
+      "missed_pickups": 0,
+      "total_orders": 1,
+      "banned_at": "2024-02-15T11:20:00",
+      "banned_until": "2024-03-15T11:20:00",
+      "banned_by": 111946301,
+      "notes": "Оставлял нецензурные отзывы"
+    }
+  ],
+  "missed_pickups": [
+    {
+      "user_id": 123456789,
+      "order_id": 1030,
+      "order_date": "2024-03-10",
+      "pickup_time": "12:30-13:00",
+      "amount": 450,
+      "reason": "Не пришел"
+    },
+    {
+      "user_id": 123456789,
+      "order_id": 1035,
+      "order_date": "2024-03-11",
+      "pickup_time": "13:00-13:30",
+      "amount": 320,
+      "reason": "Не пришел"
+    }
+  ],
+  "warnings": [
+    {
+      "user_id": 123456789,
+      "warning_number": 1,
+      "sent_at": "2024-03-10T14:00:00",
+      "message": "Вы не забрали заказ. Предупреждение 1/3"
+    },
+    {
+      "user_id": 123456789,
+      "warning_number": 2,
+      "sent_at": "2024-03-11T14:00:00",
+      "message": "Вы снова не забрали заказ. Еще одна неявка - блокировка"
+    }
+  ]
+}

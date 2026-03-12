@@ -1,66 +1,212 @@
 {
+  "last_updated": "2024-03-12T10:30:00",
   "categories": [
     {
       "id": 1,
       "name": "Салаты",
+      "name_en": "Salads",
+      "sort_order": 1,
+      "image": "/images/categories/salads.jpg",
       "items": [
         {
           "id": 101,
           "name": "Цезарь с курицей",
+          "name_en": "Chicken Caesar",
+          "description": "Куриное филе, салат романо, пармезан, соус цезарь, гренки",
           "price": 250,
-          "allergens": ["gluten", "dairy"],
+          "old_price": 0,
+          "weight": 250,
+          "calories": 350,
+          "allergens": ["gluten", "dairy", "eggs"],
+          "image": "/images/dishes/caesar.jpg",
           "available": true,
-          "description": "Классический салат с курицей, пармезаном и соусом цезарь"
+          "is_popular": true,
+          "is_new": false,
+          "sort_order": 1,
+          "created_at": "2024-01-01T10:00:00"
         },
         {
           "id": 102,
           "name": "Греческий салат",
+          "name_en": "Greek Salad",
+          "description": "Свежие огурцы, помидоры, перец, маслины, сыр фета",
           "price": 220,
+          "old_price": 0,
+          "weight": 200,
+          "calories": 180,
           "allergens": ["dairy"],
+          "image": "/images/dishes/greek.jpg",
           "available": true,
-          "description": "Свежие овощи, сыр фета, оливки"
+          "is_popular": false,
+          "is_new": true,
+          "sort_order": 2,
+          "created_at": "2024-02-15T14:30:00"
         }
       ]
     },
     {
       "id": 2,
-      "name": "Горячее",
+      "name": "Супы",
+      "name_en": "Soups",
+      "sort_order": 2,
+      "image": "/images/categories/soups.jpg",
       "items": [
         {
           "id": 201,
-          "name": "Котлета по-киевски",
-          "price": 320,
-          "allergens": ["eggs", "gluten"],
+          "name": "Борщ украинский",
+          "name_en": "Ukrainian Borscht",
+          "description": "Наваристый борщ с мясом, свеклой, сметаной и зеленью",
+          "price": 180,
+          "old_price": 200,
+          "weight": 300,
+          "calories": 220,
+          "allergens": [],
+          "image": "/images/dishes/borscht.jpg",
           "available": true,
-          "description": "Куриная котлета с маслом внутри"
-        },
+          "is_popular": true,
+          "is_new": false,
+          "sort_order": 1,
+          "created_at": "2024-01-01T10:00:00"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Горячее",
+      "name_en": "Main Courses",
+      "sort_order": 3,
+      "image": "/images/categories/hot.jpg",
+      "items": [
         {
-          "id": 202,
-          "name": "Утка по-пекински",
-          "price": 450,
-          "allergens": ["soy"],
+          "id": 301,
+          "name": "Котлета по-киевски",
+          "name_en": "Chicken Kiev",
+          "description": "Куриная котлета с маслом внутри, картофельное пюре",
+          "price": 320,
+          "old_price": 0,
+          "weight": 350,
+          "calories": 450,
+          "allergens": ["eggs", "gluten"],
+          "image": "/images/dishes/kiev.jpg",
           "available": true,
-          "description": "Утка с овощами и сладким соусом"
+          "is_popular": true,
+          "is_new": false,
+          "sort_order": 1,
+          "created_at": "2024-01-01T10:00:00"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Гарниры",
+      "name_en": "Side Dishes",
+      "sort_order": 4,
+      "image": "/images/categories/sides.jpg",
+      "items": [
+        {
+          "id": 401,
+          "name": "Картофельное пюре",
+          "name_en": "Mashed Potatoes",
+          "description": "Нежное пюре со сливочным маслом",
+          "price": 80,
+          "old_price": 0,
+          "weight": 150,
+          "calories": 180,
+          "allergens": ["dairy"],
+          "image": "/images/dishes/mashed.jpg",
+          "available": true,
+          "is_popular": false,
+          "is_new": false,
+          "sort_order": 1,
+          "created_at": "2024-01-01T10:00:00"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Напитки",
+      "name_en": "Drinks",
+      "sort_order": 5,
+      "image": "/images/categories/drinks.jpg",
+      "items": [
+        {
+          "id": 501,
+          "name": "Компот из сухофруктов",
+          "name_en": "Dried Fruit Compote",
+          "description": "Домашний компот, 250 мл",
+          "price": 50,
+          "old_price": 0,
+          "weight": 250,
+          "calories": 90,
+          "allergens": [],
+          "image": "/images/dishes/compote.jpg",
+          "available": true,
+          "is_popular": true,
+          "is_new": false,
+          "sort_order": 1,
+          "created_at": "2024-01-01T10:00:00"
         }
       ]
     }
   ],
   "business_lunches": [
     {
-      "id": 301,
-      "name": "Бизнес-ланч №1",
-      "price": 350,
-      "items": [101, 201, 401],
+      "id": 1001,
+      "name": "Бизнес-ланч №1 Эконом",
+      "name_en": "Business Lunch #1 Economy",
+      "description": "Суп + Горячее + Гарнир + Напиток",
+      "price": 280,
+      "old_price": 320,
+      "image": "/images/lunches/lunch1.jpg",
+      "items": [201, 301, 401, 501],
       "available": true,
-      "description": "Салат Цезарь, Котлета по-киевски, Компот"
+      "is_popular": true,
+      "available_until": "15:00",
+      "sort_order": 1,
+      "created_at": "2024-01-01T10:00:00"
     },
     {
-      "id": 302,
-      "name": "Бизнес-ланч №2",
-      "price": 380,
-      "items": [102, 202, 402],
+      "id": 1002,
+      "name": "Бизнес-ланч №2 Салат",
+      "name_en": "Business Lunch #2 with Salad",
+      "description": "Салат + Горячее + Гарнир + Напиток",
+      "price": 320,
+      "old_price": 0,
+      "image": "/images/lunches/lunch2.jpg",
+      "items": [101, 301, 401, 501],
       "available": true,
-      "description": "Греческий салат, Утка по-пекински, Чай"
+      "is_popular": false,
+      "available_until": "15:00",
+      "sort_order": 2,
+      "created_at": "2024-01-01T10:00:00"
+    },
+    {
+      "id": 1003,
+      "name": "Бизнес-ланч №3 Люкс",
+      "name_en": "Business Lunch #3 Lux",
+      "description": "Салат + Суп + Горячее + Гарнир + Напиток",
+      "price": 380,
+      "old_price": 420,
+      "image": "/images/lunches/lunch3.jpg",
+      "items": [101, 201, 301, 401, 501],
+      "available": true,
+      "is_popular": true,
+      "available_until": "15:00",
+      "sort_order": 3,
+      "created_at": "2024-01-01T10:00:00"
+    }
+  ],
+  "specials": [
+    {
+      "id": 2001,
+      "name": "Скидка 20% на первые 3 заказа",
+      "description": "Для новых клиентов",
+      "type": "discount",
+      "value": 20,
+      "code": "NEW2024",
+      "active": true,
+      "start_date": "2024-01-01",
+      "end_date": "2024-12-31"
     }
   ]
 }

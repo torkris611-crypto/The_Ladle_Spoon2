@@ -137,23 +137,44 @@ function closeLoginModal() {
 function handleLogin(event) {
     event.preventDefault();
     
-    const userId = document.getElementById('userId').value;
+    const userId = parseInt(document.getElementById('userId').value);
+    console.log('Попытка входа с ID:', userId);
+    console.log('Тип данных:', typeof userId);
     
-    // Создаем пользователя
+    // ID Антона
+    const ADMIN_ID = 111946301;
+    console.log('ID админа:', ADMIN_ID);
+    console.log('Совпадение:', userId === ADMIN_ID);
+    
+    // Проверяем, админ ли это
+    const isAdmin = (userId === ADMIN_ID);
+    
+    if (isAdmin) {
+        console.log('✅ Вход как администратор');
+    } else {
+        console.log('❌ Вход как обычный пользователь');
+    }
+    
     currentUser = {
-        id: parseInt(userId),
+        id: userId,
         name: `User_${userId}`,
+        role: isAdmin ? 'admin' : 'user',
         loginTime: new Date().toISOString()
     };
     
-    // Сохраняем в localStorage
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    console.log('Пользователь сохранен:', currentUser);
     
-    // Обновляем интерфейс
     updateUserInterface();
     closeLoginModal();
     
-    alert(`Добро пожаловать, ${currentUser.name}!`);
+    if (isAdmin) {
+        alert('✅ Добро пожаловать, администратор!');
+        // Перенаправляем в админку
+        window.location.href = 'admin.html';
+    } else {
+        alert(`👋 Добро пожаловать, ${currentUser.name}!`);
+    }
 }
 
 function logout() {
@@ -163,17 +184,35 @@ function logout() {
 }
 
 function updateUserInterface() {
+    console.log('Обновление интерфейса. Текущий пользователь:', currentUser);
+    
     const loginBtn = document.querySelector('.login-btn');
     const userInfo = document.querySelector('.user-info');
     const userName = document.querySelector('.user-name');
+    const adminLink = document.getElementById('adminLink');
     
     if (currentUser) {
         loginBtn.classList.add('hidden');
         userInfo.classList.remove('hidden');
         userName.textContent = currentUser.name;
+        
+        // Показываем ссылку на админку если админ
+        if (adminLink) {
+            const isAdmin = (currentUser.role === 'admin' || currentUser.id === 111946301);
+            console.log('Показывать ссылку на админку?', isAdmin);
+            
+            if (isAdmin) {
+                adminLink.classList.remove('hidden');
+            } else {
+                adminLink.classList.add('hidden');
+            }
+        }
     } else {
         loginBtn.classList.remove('hidden');
         userInfo.classList.add('hidden');
+        if (adminLink) {
+            adminLink.classList.add('hidden');
+        }
     }
 }
 

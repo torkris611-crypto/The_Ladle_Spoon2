@@ -1,0 +1,80 @@
+{
+  "last_updated": "2024-03-12T10:30:00",
+  "users": [
+    {
+      "id": 111946301,
+      "telegram_id": 111946301,
+      "username": "anton_cafe",
+      "first_name": "Антон",
+      "last_name": "Иванов",
+      "phone": "+79991234567",
+      "email": "anton@cafe.ru",
+      "role": "admin",
+      "status": "active",
+      "avatar": "/images/users/anton.jpg",
+      "registered_at": "2024-01-01T09:00:00",
+      "last_visit": "2024-03-12T09:30:00",
+      "total_orders": 150,
+      "total_spent": 45000,
+      "missed_pickups": 0,
+      "favorite_dishes": [101, 301, 501],
+      "preferences": {
+        "notifications": true,
+        "language": "ru",
+        "allergens": []
+      }
+    },
+    {
+      "id": 123456789,
+      "telegram_id": 123456789,
+      "username": "john_doe",
+      "first_name": "Иван",
+      "last_name": "Петров",
+      "phone": "+79997654321",
+      "email": "ivan@mail.ru",
+      "role": "user",
+      "status": "active",
+      "avatar": "/images/users/default.jpg",
+      "registered_at": "2024-02-15T14:30:00",
+      "last_visit": "2024-03-11T12:45:00",
+      "total_orders": 5,
+      "total_spent": 1500,
+      "missed_pickups": 1,
+      "favorite_dishes": [102, 202],
+      "preferences": {
+        "notifications": true,
+        "language": "ru",
+        "allergens": ["dairy"]
+      }
+    },
+    {
+      "id": 987654321,
+      "telegram_id": 987654321,
+      "username": "mary_smith",
+      "first_name": "Мария",
+      "last_name": "Сидорова",
+      "phone": "+79995551234",
+      "email": "maria@yandex.ru",
+      "role": "cashier",
+      "status": "active",
+      "avatar": "/images/users/maria.jpg",
+      "registered_at": "2024-01-10T11:00:00",
+      "last_visit": "2024-03-12T08:15:00",
+      "total_orders": 45,
+      "total_spent": 13500,
+      "missed_pickups": 0,
+      "favorite_dishes": [201, 301],
+      "preferences": {
+        "notifications": true,
+        "language": "ru",
+        "allergens": []
+      }
+    }
+  ],
+  "roles": {
+    "admin": "Полный доступ",
+    "manager": "Управление заказами",
+    "cashier": "Выдача заказов",
+    "user": "Только заказы"
+  }
+}

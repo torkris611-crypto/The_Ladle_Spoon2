@@ -1,0 +1,132 @@
+{
+  "last_updated": "2024-03-12T10:30:00",
+  "last_order_id": 1050,
+  "orders": [
+    {
+      "id": 1045,
+      "order_number": "240312-1045",
+      "user_id": 123456789,
+      "user_name": "Иван Петров",
+      "created_at": "2024-03-12T09:15:00",
+      "pickup_time": "13:00-13:30",
+      "status": "new",
+      "items": [
+        {
+          "id": 101,
+          "type": "dish",
+          "name": "Цезарь с курицей",
+          "price": 250,
+          "quantity": 1,
+          "total": 250
+        },
+        {
+          "id": 301,
+          "type": "dish",
+          "name": "Котлета по-киевски",
+          "price": 320,
+          "quantity": 1,
+          "total": 320
+        }
+      ],
+      "total_amount": 570,
+      "payment_method": "cash",
+      "payment_status": "pending",
+      "comment": "Без лука пожалуйста",
+      "preparation_time": 15,
+      "issued_by": null,
+      "issued_at": null,
+      "cancelled_by": null,
+      "cancelled_at": null,
+      "cancellation_reason": null
+    },
+    {
+      "id": 1046,
+      "order_number": "240312-1046",
+      "user_id": 987654321,
+      "user_name": "Мария Сидорова",
+      "created_at": "2024-03-12T09:30:00",
+      "pickup_time": "12:30-13:00",
+      "status": "preparing",
+      "items": [
+        {
+          "id": 1001,
+          "type": "lunch",
+          "name": "Бизнес-ланч №1 Эконом",
+          "price": 280,
+          "quantity": 1,
+          "total": 280,
+          "items": [201, 301, 401, 501]
+        }
+      ],
+      "total_amount": 280,
+      "payment_method": "card",
+      "payment_status": "paid",
+      "comment": "",
+      "preparation_time": 10,
+      "issued_by": null,
+      "issued_at": null,
+      "cancelled_by": null,
+      "cancelled_at": null,
+      "cancellation_reason": null
+    },
+    {
+      "id": 1047,
+      "order_number": "240312-1047",
+      "user_id": 111946301,
+      "user_name": "Антон Иванов",
+      "created_at": "2024-03-12T09:45:00",
+      "pickup_time": "13:30-14:00",
+      "status": "completed",
+      "items": [
+        {
+          "id": 102,
+          "type": "dish",
+          "name": "Греческий салат",
+          "price": 220,
+          "quantity": 1,
+          "total": 220
+        },
+        {
+          "id": 202,
+          "type": "dish",
+          "name": "Утка по-пекински",
+          "price": 450,
+          "quantity": 1,
+          "total": 450
+        },
+        {
+          "id": 501,
+          "type": "dish",
+          "name": "Компот",
+          "price": 50,
+          "quantity": 2,
+          "total": 100
+        }
+      ],
+      "total_amount": 770,
+      "payment_method": "card",
+      "payment_status": "paid",
+      "comment": "",
+      "preparation_time": 20,
+      "issued_by": 987654321,
+      "issued_at": "2024-03-12T13:45:00",
+      "cancelled_by": null,
+      "cancelled_at": null,
+      "cancellation_reason": null
+    }
+  ],
+  "statuses": {
+    "new": "Новый заказ",
+    "confirmed": "Подтвержден",
+    "preparing": "Готовится",
+    "ready": "Готов к выдаче",
+    "completed": "Выдан",
+    "cancelled": "Отменен",
+    "no_show": "Неявка"
+  },
+  "payment_methods": {
+    "cash": "Наличные",
+    "card": "Карта",
+    "online": "Онлайн"
+  }
+}

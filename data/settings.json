@@ -1,0 +1,48 @@
+{
+  "canteen_info": {
+    "name": "Столовая Антона",
+    "name_en": "Anton's Canteen",
+    "address": "ул. Примерная, д. 123",
+    "phone": "+7 (999) 123-45-67",
+    "email": "info@anton-cafe.ru",
+    "working_hours": {
+      "monday": "09:00-18:00",
+      "tuesday": "09:00-18:00",
+      "wednesday": "09:00-18:00",
+      "thursday": "09:00-18:00",
+      "friday": "09:00-18:00",
+      "saturday": "closed",
+      "sunday": "closed"
+    },
+    "hot_meals_time": "12:00-15:00"
+  },
+  "time_slots": [
+    { "id": 1, "time": "12:00-12:30", "max_orders": 20 },
+    { "id": 2, "time": "12:30-13:00", "max_orders": 25 },
+    { "id": 3, "time": "13:00-13:30", "max_orders": 25 },
+    { "id": 4, "time": "13:30-14:00", "max_orders": 20 }
+  ],
+  "allergens": [
+    { "id": "gluten", "name": "Глютен", "icon": "🌾", "description": "Содержит пшеницу, рожь, ячмень" },
+    { "id": "dairy", "name": "Молочные продукты", "icon": "🥛", "description": "Содержит лактозу" },
+    { "id": "eggs", "name": "Яйца", "icon": "🥚", "description": "Содержит яйца" },
+    { "id": "fish", "name": "Рыба", "icon": "🐟", "description": "Содержит рыбу" },
+    { "id": "soy", "name": "Соя", "icon": "🌱", "description": "Содержит сою" },
+    { "id": "nuts", "name": "Орехи", "icon": "🥜", "description": "Содержит орехи" },
+    { "id": "sesame", "name": "Кунжут", "icon": "⚫", "description": "Содержит кунжут" },
+    { "id": "mustard", "name": "Горчица", "icon": "🟡", "description": "Содержит горчицу" }
+  ],
+  "payment_options": [
+    { "id": "cash", "name": "Наличные" },
+    { "id": "card", "name": "Карта" },
+    { "id": "online", "name": "Онлайн оплата" }
+  ],
+  "order_statuses": [
+    { "id": "new", "name": "Новый", "color": "blue" },
+    { "id": "confirmed", "name": "Подтвержден", "color": "green" },
+    { "id": "preparing", "name": "Готовится", "color": "orange" },
+    { "id": "ready", "name": "Готов", "color": "purple" },
+    { "id": "completed", "name": "Выдан", "color": "gray" },
+    { "id": "cancelled", "name": "Отменен", "color": "red" }
+  ]
+}
