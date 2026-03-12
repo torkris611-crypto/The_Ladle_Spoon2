@@ -1,0 +1,7 @@
+# JSON файлы создаются автоматически при первом запуске
+# - menu.json
+# - users.json  
+# - orders.json
+# - reviews.json
+# - blacklist.json
+# - settings.json
