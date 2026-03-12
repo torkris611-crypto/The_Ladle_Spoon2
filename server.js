@@ -6,5 +6,5 @@ const port = 3000;
 app.use(express.static(path.join(__dirname)));
 
 app.listen(port, () => {
-    console.log(`🍽 Столовая Антона запущена на http://localhost:${port}`);
+    console.log(`🍽 Столовая запущена на http://localhost:${port}`);
 });
