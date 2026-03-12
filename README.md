@@ -44,7 +44,7 @@
         cd C:\Users\Prepod.TOP\Desktop\The_Ladle_Spoon
 
 3. Запустите сервер
-        python -m http.server 8000
+        node server.js
 
 4. Откройте браузер
         Перейдите по адресу: http://localhost:3000
