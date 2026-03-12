@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Столовая</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>Столовая</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="active"><i class="fas fa-home"></i> Главная</a>
+                    <a href="menu.html"><i class="fas fa-book-open"></i> Меню</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count">0</span></a>
+                    <a href="orders.html"><i class="fas fa-clipboard-list"></i> Заказы</a>
+                </nav>
+                <div class="user-menu">
+                    <button class="login-btn" onclick="showLoginModal()">Войти</button>
+                    <div class="user-info hidden">
+                        <span class="user-name"></span>
+                        <button class="logout-btn" onclick="logout()">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="main">
+            <div class="container">
+                <section class="hero">
+                    <div class="hero-content">
+                        <h2>Добро пожаловать в столовую</h2>
+                        <p>Закажи еду онлайн и забери в удобное время</p>
+                        <div class="hero-buttons">
+                            <a href="menu.html" class="btn btn-primary">Посмотреть меню</a>
+                            <a href="#special-offers" class="btn btn-secondary">Акции</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Спецпредложения -->
+                <section id="special-offers" class="section">
+                    <h2 class="section-title">Бизнес-ланчи сегодня</h2>
+                    <div class="offers-grid" id="business-lunches">
+                        <!-- Будут загружены из JSON -->
+                    </div>
+                </section>
+
+                <!-- Популярные блюда -->
+                <section class="section">
+                    <h2 class="section-title">🔥 Популярное сегодня</h2>
+                    <div class="popular-grid" id="popular-items">
+                        <!-- Будут загружены из JSON -->
+                    </div>
+                </section>
+
+                <!-- Как это работает -->
+                <section class="section how-it-works">
+                    <h2 class="section-title">Как это работает</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-icon">1</div>
+                            <h3>Выбери блюда</h3>
+                            <p>Просмотри меню и добавь понравившиеся блюда в корзину</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">2</div>
+                            <h3>Оформи заказ</h3>
+                            <p>Выбери время получения и подтверди заказ</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">3</div>
+                            <h3>Получи номер</h3>
+                            <p>После оформления ты получишь номер заказа</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">4</div>
+                            <h3>Забери еду</h3>
+                            <p>Приди в столовую, назови номер и получи заказ</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Отзывы -->
+                <section class="section reviews">
+                    <h2 class="section-title">Отзывы наших гостей</h2>
+                    <div class="reviews-slider" id="reviews">
+                        <!-- Будут загружены из JSON -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Подвал -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <h3>Столова</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> ул. Примерная, д. 123</p>
+                        <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
+                        <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Навигация</h4>
+                        <ul>
+                            <li><a href="menu.html">Меню</a></li>
+                            <li><a href="cart.html">Корзина</a></li>
+                            <li><a href="orders.html">Заказы</a></li>
+                            <li><a href="#reviews">Отзывы</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-social">
+                        <h4>Мы в соцсетях</h4>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-vk"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Столовая Антона. Все права защищены.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Вход в систему</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="userId">Ваш Telegram ID:</label>
+                    <input type="text" id="userId" placeholder="Введите ваш Telegram ID" required>
+                    <small>Как узнать ID? Напишите @userinfobot в Telegram</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

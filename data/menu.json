@@ -1,0 +1,66 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Салаты",
+      "items": [
+        {
+          "id": 101,
+          "name": "Цезарь с курицей",
+          "price": 250,
+          "allergens": ["gluten", "dairy"],
+          "available": true,
+          "description": "Классический салат с курицей, пармезаном и соусом цезарь"
+        },
+        {
+          "id": 102,
+          "name": "Греческий салат",
+          "price": 220,
+          "allergens": ["dairy"],
+          "available": true,
+          "description": "Свежие овощи, сыр фета, оливки"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Горячее",
+      "items": [
+        {
+          "id": 201,
+          "name": "Котлета по-киевски",
+          "price": 320,
+          "allergens": ["eggs", "gluten"],
+          "available": true,
+          "description": "Куриная котлета с маслом внутри"
+        },
+        {
+          "id": 202,
+          "name": "Утка по-пекински",
+          "price": 450,
+          "allergens": ["soy"],
+          "available": true,
+          "description": "Утка с овощами и сладким соусом"
+        }
+      ]
+    }
+  ],
+  "business_lunches": [
+    {
+      "id": 301,
+      "name": "Бизнес-ланч №1",
+      "price": 350,
+      "items": [101, 201, 401],
+      "available": true,
+      "description": "Салат Цезарь, Котлета по-киевски, Компот"
+    },
+    {
+      "id": 302,
+      "name": "Бизнес-ланч №2",
+      "price": 380,
+      "items": [102, 202, 402],
+      "available": true,
+      "description": "Греческий салат, Утка по-пекински, Чай"
+    }
+  ]
+}
