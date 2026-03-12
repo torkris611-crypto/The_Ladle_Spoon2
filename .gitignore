@@ -1,0 +1,35 @@
+# Виртуальное окружение Python
+venv/
+env/
+.env
+.venv/
+__pycache__/
+
+# Данные (чтобы не коммитить тестовые/реальные заказы)
+data/
+*.json
+!data/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Логи
+logs/
+*.log
+
+# Бэкапы
+backup/
+*.bak
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Системные файлы
+Thumbs.db
+desktop.ini
