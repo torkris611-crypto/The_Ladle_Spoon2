@@ -1,361 +1,76 @@
 // Глобальные переменные
 let currentUser = null;
-let cart = [];
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Столовая Антона загружена!');
+    console.log('🍽 Столовая Антона загружена!');
     
     // Загружаем данные
-    loadMenu();
     loadBusinessLunches();
     loadPopularItems();
     loadReviews();
     
-    // Проверяем, есть ли сохраненный пользователь
-    checkSavedUser();
+    // Проверяем авторизацию
+    checkAuthStatus();
     
     // Обновляем счетчик корзины
     updateCartCount();
 });
 
-// Загрузка меню из JSON
-async function loadMenu() {
-    try {
-        const response = await fetch('data/menu.json');
-        const data = await response.json();
-        console.log('Меню загружено:', data);
-        return data;
-    } catch (error) {
-        console.error('Ошибка загрузки меню:', error);
-        return { categories: [], business_lunches: [] };
-    }
-}
-
-// Загрузка бизнес-ланчей
-async function loadBusinessLunches() {
-    try {
-        const data = await loadMenu();
-        const lunchesContainer = document.getElementById('business-lunches');
-        
-        if (lunchesContainer && data.business_lunches) {
-            lunchesContainer.innerHTML = data.business_lunches.map(lunch => `
-                <div class="offer-card">
-                    <div class="offer-image" style="background-image: url('images/lunch${lunch.id}.jpg')"></div>
-                    <div class="offer-content">
-                        <h3 class="offer-title">${lunch.name}</h3>
-                        <p class="offer-description">Состав: ${lunch.items.join(', ')}</p>
-                        <p class="offer-price">${lunch.price} ₽</p>
-                        <button class="offer-button" onclick="addToCart(${lunch.id}, 'lunch')">
-                            В корзину
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-    } catch (error) {
-        console.error('Ошибка загрузки бизнес-ланчей:', error);
-    }
-}
-
-// Загрузка популярных блюд
-async function loadPopularItems() {
-    try {
-        const data = await loadMenu();
-        const popularContainer = document.getElementById('popular-items');
-        
-        if (popularContainer && data.categories) {
-            // Берем первые 4 блюда из разных категорий
-            const popular = [];
-            data.categories.forEach(category => {
-                if (category.items) {
-                    popular.push(...category.items.slice(0, 2));
-                }
-            });
-            
-            popularContainer.innerHTML = popular.slice(0, 4).map(item => `
-                <div class="offer-card">
-                    <div class="offer-image" style="background-image: url('images/dish${item.id}.jpg')"></div>
-                    <div class="offer-content">
-                        <h3 class="offer-title">${item.name}</h3>
-                        <p class="offer-price">${item.price} ₽</p>
-                        <button class="offer-button" onclick="addToCart(${item.id}, 'dish')">
-                            В корзину
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-    } catch (error) {
-        console.error('Ошибка загрузки популярных блюд:', error);
-    }
-}
-
-// Загрузка отзывов
-async function loadReviews() {
-    try {
-        const response = await fetch('data/reviews.json');
-        const data = await response.json();
-        const reviewsContainer = document.getElementById('reviews');
-        
-        if (reviewsContainer && data.reviews) {
-            reviewsContainer.innerHTML = data.reviews.slice(0, 3).map(review => `
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar"></div>
-                        <div>
-                            <div class="review-author">Пользователь #${review.user_id}</div>
-                            <div class="review-rating">${'⭐'.repeat(review.rating)}</div>
-                        </div>
-                    </div>
-                    <p class="review-text">"${review.comment}"</p>
-                </div>
-            `).join('');
-        }
-    } catch (error) {
-        console.error('Ошибка загрузки отзывов:', error);
-    }
-}
-
-// Работа с пользователем
-function checkSavedUser() {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        updateUserInterface();
-    }
-}
-
-function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'block';
-}
-
-function closeLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
-}
-
-function handleLogin(event) {
-    event.preventDefault();
-    
-    const userId = parseInt(document.getElementById('userId').value);
-    console.log('Попытка входа с ID:', userId);
-    console.log('Тип данных:', typeof userId);
-    
-    // ID Антона
-    const ADMIN_ID = 111946301;
-    console.log('ID админа:', ADMIN_ID);
-    console.log('Совпадение:', userId === ADMIN_ID);
-    
-    // Проверяем, админ ли это
-    const isAdmin = (userId === ADMIN_ID);
-    
-    if (isAdmin) {
-        console.log('✅ Вход как администратор');
-    } else {
-        console.log('❌ Вход как обычный пользователь');
-    }
-    
-    currentUser = {
-        id: userId,
-        name: `User_${userId}`,
-        role: isAdmin ? 'admin' : 'user',
-        loginTime: new Date().toISOString()
-    };
-    
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    console.log('Пользователь сохранен:', currentUser);
-    
-    updateUserInterface();
-    closeLoginModal();
-    
-    if (isAdmin) {
-        alert('✅ Добро пожаловать, администратор!');
-        // Перенаправляем в админку
-        window.location.href = 'admin.html';
-    } else {
-        alert(`👋 Добро пожаловать, ${currentUser.name}!`);
-    }
-}
-
-function logout() {
-    currentUser = null;
-    localStorage.removeItem('currentUser');
-    updateUserInterface();
-}
-
-function updateUserInterface() {
-    console.log('Обновление интерфейса. Текущий пользователь:', currentUser);
-    
-    const loginBtn = document.querySelector('.login-btn');
-    const userInfo = document.querySelector('.user-info');
-    const userName = document.querySelector('.user-name');
-    const adminLink = document.getElementById('adminLink');
+// Проверка авторизации
+function checkAuthStatus() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     
     if (currentUser) {
-        loginBtn.classList.add('hidden');
-        userInfo.classList.remove('hidden');
-        userName.textContent = currentUser.name;
+        // Пользователь авторизован
+        const loginBtn = document.querySelector('.login-btn');
+        const userInfo = document.querySelector('.user-info');
+        const userName = document.querySelector('.user-name');
         
-        // Показываем ссылку на админку если админ
+        if (loginBtn) loginBtn.classList.add('hidden');
+        if (userInfo) userInfo.classList.remove('hidden');
+        if (userName) userName.textContent = currentUser.name || 'Пользователь';
+        
+        // Показываем ссылку на админку для администратора
+        const adminLink = document.querySelector('.nav a[href="admin.html"]');
         if (adminLink) {
-            const isAdmin = (currentUser.role === 'admin' || currentUser.id === 111946301);
-            console.log('Показывать ссылку на админку?', isAdmin);
-            
-            if (isAdmin) {
-                adminLink.classList.remove('hidden');
+            if (currentUser.id === 111946301) { // ID Антона
+                adminLink.style.display = 'inline-block';
             } else {
-                adminLink.classList.add('hidden');
+                adminLink.style.display = 'none';
             }
         }
-    } else {
-        loginBtn.classList.remove('hidden');
-        userInfo.classList.add('hidden');
-        if (adminLink) {
-            adminLink.classList.add('hidden');
-        }
     }
 }
-
-// Работа с корзиной
-function addToCart(itemId, type) {
-    if (!currentUser) {
-        alert('Пожалуйста, войдите чтобы добавить блюдо в корзину');
-        showLoginModal();
-        return;
-    }
-    
-    // Загружаем текущую корзину
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Добавляем товар
-    cart.push({
-        id: itemId,
-        type: type,
-        quantity: 1,
-        addedAt: new Date().toISOString()
-    });
-    
-    // Сохраняем
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Обновляем счетчик
-    updateCartCount();
-    
-    alert('Товар добавлен в корзину!');
-}
-
-function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const countElements = document.querySelectorAll('.cart-count');
-    
-    countElements.forEach(el => {
-        el.textContent = cart.length;
-        el.style.display = cart.length > 0 ? 'inline' : 'none';
-    });
-}
-
-// Закрытие модального окна при клике вне его
-window.onclick = function(event) {
-    const modal = document.getElementById('loginModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Данные для бизнес-ланчей с локальными картинками
-const businessLunches = [
-    {
-        id: 1,
-        name: "Бизнес-ланч №1",
-        description: "Суп дня, горячее с гарниром, салат, напиток",
-        price: 350,
-        image: "images/Бизнес.jpg"
-    },
-    {
-        id: 2,
-        name: "Бизнес-ланч №2",
-        description: "Два горячих блюда на выбор, салат, напиток",
-        price: 420,
-        image: "images/бизнес1.jpg"
-    },
-    {
-        id: 3,
-        name: "Бизнес-ланч №3",
-        description: "Фирменное блюдо, суп, закуска, десерт",
-        price: 480,
-        image: "images/бизнес3.jpg"
-    }
-];
-
-// Популярные блюда
-const popularItems = [
-    {
-        id: 1,
-        name: "Борщ с пампушками",
-        description: "Традиционный украинский борщ",
-        price: 180,
-        image: "images/гриб.jpg"
-    },
-    {
-        id: 2,
-        name: "Котлета по-киевски",
-        description: "Сливочное масло внутри, хрустящая корочка",
-        price: 250,
-        image: "images/рыба.jpg"
-    },
-    {
-        id: 3,
-        name: "Салат Цезарь",
-        description: "С курицей, пармезаном и соусом",
-        price: 220,
-        image: "images/тарелка1.jpg"
-    },
-    {
-        id: 4,
-        name: "Картофель фри",
-        description: "Хрустящий, золотистый",
-        price: 120,
-        image: "images/тыква.jpg"
-    }
-];
-
-// Отзывы с аватарками
-const reviews = [
-    {
-        id: 1,
-        author: "Анна",
-        avatar: "images/томат.jpg",
-        rating: 5,
-        text: "Очень вкусно готовят! Особенно понравился борщ. Всегда свежее и горячее."
-    },
-    {
-        id: 2,
-        author: "Михаил",
-        avatar: "images/тарелка6.jpg",
-        rating: 4,
-        text: "Хорошее место для обеда. Быстрое обслуживание, демократичные цены."
-    },
-    {
-        id: 3,
-        author: "Елена",
-        avatar: "images/тарелка4.jpg",
-        rating: 5,
-        text: "Удобно заказывать онлайн. Всегда готовы к назначенному времени."
-    }
-];
-
-// Загрузка данных при открытии страницы
-document.addEventListener('DOMContentLoaded', function() {
-    loadBusinessLunches();
-    loadPopularItems();
-    loadReviews();
-    updateCartCount();
-});
 
 // Загрузка бизнес-ланчей
 function loadBusinessLunches() {
     const container = document.getElementById('business-lunches');
     if (!container) return;
+
+    const businessLunches = [
+        {
+            id: 101,
+            name: "Бизнес-ланч №1",
+            description: "Суп дня, горячее с гарниром, салат, напиток",
+            price: 350,
+            image: "images/Бизнес.jpg"
+        },
+        {
+            id: 102,
+            name: "Бизнес-ланч №2",
+            description: "Два горячих блюда на выбор, салат, напиток",
+            price: 420,
+            image: "images/бизнес1.jpg"
+        },
+        {
+            id: 103,
+            name: "Бизнес-ланч №3",
+            description: "Фирменное блюдо, суп, закуска, десерт",
+            price: 480,
+            image: "images/бизнес3.jpg"
+        }
+    ];
 
     container.innerHTML = businessLunches.map(lunch => `
         <div class="offer-card">
@@ -363,10 +78,18 @@ function loadBusinessLunches() {
             <div class="offer-content">
                 <h3 class="offer-title">${lunch.name}</h3>
                 <p class="offer-description">${lunch.description}</p>
-                <div class="offer-price">${lunch.price} ₽</div>
-                <button class="offer-button" onclick="addToCart(${lunch.id}, '${lunch.name}', ${lunch.price}, '${lunch.image}')">
-                    В корзину
-                </button>
+                <div class="offer-footer">
+                    <span class="offer-price">${lunch.price} ₽</span>
+                    <button class="btn btn-primary btn-small" onclick="addToCart({
+                        id: ${lunch.id},
+                        name: '${lunch.name}',
+                        price: ${lunch.price},
+                        image: '${lunch.image}',
+                        category: 'Бизнес-ланч'
+                    })">
+                        <i class="fas fa-cart-plus"></i> В корзину
+                    </button>
+                </div>
             </div>
         </div>
     `).join('');
@@ -377,16 +100,55 @@ function loadPopularItems() {
     const container = document.getElementById('popular-items');
     if (!container) return;
 
+    const popularItems = [
+        {
+            id: 201,
+            name: "Борщ с пампушками",
+            description: "Традиционный украинский борщ",
+            price: 180,
+            image: "images/гриб.jpg"
+        },
+        {
+            id: 202,
+            name: "Котлета по-киевски",
+            description: "Сливочное масло внутри, хрустящая корочка",
+            price: 250,
+            image: "images/рыба.jpg"
+        },
+        {
+            id: 203,
+            name: "Салат Цезарь",
+            description: "С курицей, пармезаном и соусом",
+            price: 220,
+            image: "images/тарелка1.jpg"
+        },
+        {
+            id: 204,
+            name: "Картофель фри",
+            description: "Хрустящий, золотистый",
+            price: 120,
+            image: "images/тыква.jpg"
+        }
+    ];
+
     container.innerHTML = popularItems.map(item => `
         <div class="offer-card">
             <div class="offer-image" style="background-image: url('${item.image}')"></div>
             <div class="offer-content">
                 <h3 class="offer-title">${item.name}</h3>
                 <p class="offer-description">${item.description}</p>
-                <div class="offer-price">${item.price} ₽</div>
-                <button class="offer-button" onclick="addToCart(${item.id}, '${item.name}', ${item.price}, '${item.image}')">
-                    В корзину
-                </button>
+                <div class="offer-footer">
+                    <span class="offer-price">${item.price} ₽</span>
+                    <button class="btn btn-primary btn-small" onclick="addToCart({
+                        id: ${item.id},
+                        name: '${item.name}',
+                        price: ${item.price},
+                        image: '${item.image}',
+                        category: 'Популярное'
+                    })">
+                        <i class="fas fa-cart-plus"></i> В корзину
+                    </button>
+                </div>
             </div>
         </div>
     `).join('');
@@ -397,6 +159,30 @@ function loadReviews() {
     const container = document.getElementById('reviews');
     if (!container) return;
 
+    const reviews = [
+        {
+            id: 1,
+            author: "Анна",
+            avatar: "images/томат.jpg",
+            rating: 5,
+            text: "Очень вкусно готовят! Особенно понравился борщ. Всегда свежее и горячее."
+        },
+        {
+            id: 2,
+            author: "Михаил",
+            avatar: "images/тарелка6.jpg",
+            rating: 4,
+            text: "Хорошее место для обеда. Быстрое обслуживание, демократичные цены."
+        },
+        {
+            id: 3,
+            author: "Елена",
+            avatar: "images/тарелка4.jpg",
+            rating: 5,
+            text: "Удобно заказывать онлайн. Всегда готовы к назначенному времени."
+        }
+    ];
+
     container.innerHTML = reviews.map(review => `
         <div class="review-card">
             <div class="review-header">
@@ -406,65 +192,176 @@ function loadReviews() {
                     <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
                 </div>
             </div>
-            <div class="review-text">${review.text}</div>
+            <div class="review-text">"${review.text}"</div>
         </div>
     `).join('');
 }
 
+// ========== РАБОТА С КОРЗИНОЙ ==========
+
 // Добавление в корзину
-function addToCart(id, name, price, image) {
+function addToCart(item) {
+    // Проверяем авторизацию
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!currentUser) {
+        alert('⚠️ Пожалуйста, войдите в систему');
+        showLoginModal();
+        return;
+    }
+    
+    // Загружаем текущую корзину
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-    const existingItem = cart.find(item => item.id === id);
+    // Проверяем, есть ли уже такой товар
+    const existingItem = cart.find(cartItem => cartItem.id === item.id);
     
     if (existingItem) {
-        existingItem.quantity += 1;
+        // Увеличиваем количество
+        existingItem.quantity = (existingItem.quantity || 1) + 1;
     } else {
+        // Добавляем новый товар
         cart.push({
-            id: id,
-            name: name,
-            price: price,
-            image: image,
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            category: item.category || 'Блюдо',
             quantity: 1
         });
     }
     
+    // Сохраняем корзину
     localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Обновляем счетчик
     updateCartCount();
-    alert('Товар добавлен в корзину!');
+    
+    // Показываем уведомление
+    showNotification('✅ Товар добавлен в корзину');
 }
 
 // Обновление счетчика корзины
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    
     const cartCounts = document.querySelectorAll('.cart-count');
     cartCounts.forEach(el => {
-        if (el) el.textContent = count;
+        if (el) {
+            el.textContent = totalItems;
+            el.style.display = totalItems > 0 ? 'inline' : 'none';
+        }
     });
 }
 
-// Функции для модального окна
+// Показать уведомление
+function showNotification(message) {
+    // Проверяем, есть ли уже уведомление
+    let notification = document.querySelector('.cart-notification');
+    
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.className = 'cart-notification';
+        document.body.appendChild(notification);
+    }
+    
+    notification.textContent = message;
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 2000);
+}
+
+// ========== РАБОТА С ПОЛЬЗОВАТЕЛЕМ ==========
+
 function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'block';
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
 }
 
 function closeLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 function handleLogin(event) {
     event.preventDefault();
-    const userId = document.getElementById('userId').value;
-    localStorage.setItem('userId', userId);
-    document.querySelector('.login-btn').classList.add('hidden');
-    document.querySelector('.user-info').classList.remove('hidden');
-    document.querySelector('.user-name').textContent = `User ${userId}`;
+    
+    const userId = document.getElementById('userId').value.trim();
+    
+    if (!userId) {
+        alert('Введите Telegram ID');
+        return;
+    }
+    
+    const ADMIN_ID = 111946301;
+    const isAdmin = (parseInt(userId) === ADMIN_ID);
+    
+    const user = {
+        id: parseInt(userId),
+        name: isAdmin ? 'Антон' : `User_${userId}`,
+        role: isAdmin ? 'admin' : 'user',
+        loginTime: new Date().toISOString()
+    };
+    
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    
+    // Обновляем интерфейс
+    const loginBtn = document.querySelector('.login-btn');
+    const userInfo = document.querySelector('.user-info');
+    const userName = document.querySelector('.user-name');
+    
+    if (loginBtn) loginBtn.classList.add('hidden');
+    if (userInfo) userInfo.classList.remove('hidden');
+    if (userName) userName.textContent = user.name;
+    
+    // Показываем ссылку на админку
+    const adminLink = document.querySelector('.nav a[href="admin.html"]');
+    if (adminLink) {
+        adminLink.style.display = isAdmin ? 'inline-block' : 'none';
+    }
+    
     closeLoginModal();
+    
+    if (isAdmin) {
+        alert('👋 Добро пожаловать, администратор!');
+    } else {
+        alert(`👋 Добро пожаловать, ${user.name}!`);
+    }
 }
 
 function logout() {
-    localStorage.removeItem('userId');
-    document.querySelector('.login-btn').classList.remove('hidden');
-    document.querySelector('.user-info').classList.add('hidden');
+    localStorage.removeItem('currentUser');
+    
+    // Обновляем интерфейс
+    const loginBtn = document.querySelector('.login-btn');
+    const userInfo = document.querySelector('.user-info');
+    const adminLink = document.querySelector('.nav a[href="admin.html"]');
+    
+    if (loginBtn) loginBtn.classList.remove('hidden');
+    if (userInfo) userInfo.classList.add('hidden');
+    if (adminLink) adminLink.style.display = 'none';
+    
+    // Не очищаем корзину при выходе
 }
+
+// Закрытие модального окна при клике вне его
+window.onclick = function(event) {
+    const modal = document.getElementById('loginModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Обновление при изменении localStorage
+window.addEventListener('storage', function(e) {
+    if (e.key === 'cart') {
+        updateCartCount();
+    }
+});
