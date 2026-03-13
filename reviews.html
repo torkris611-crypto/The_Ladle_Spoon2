@@ -68,39 +68,47 @@
                                     </div>
 
                                     <!-- Выбор блюда -->
-                                    <div class="form-group">
-                                        <label>
-                                            <i class="fas fa-utensil-spoon"></i>
-                                            Выберите блюдо
-                                        </label>
-                                        <div class="dish-selector" id="dishSelector">
-                                            <div class="dish-option" data-dish="Борщ">
-                                                <img src="images/borsh.jpg" alt="Борщ">
-                                                <span>Борщ</span>
+                                        <div class="form-group">
+                                            <label>
+                                                <i class="fas fa-utensil-spoon"></i>
+                                                Выберите блюдо
+                                            </label>
+                                            <div class="dish-selector" id="dishSelector">
+                                                <div class="dish-option" data-dish="Борщ">
+                                                    <img src="images/borsh.jpg" alt="Борщ" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Борщ</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Солянка">
+                                                    <img src="images/solyanka.jpg" alt="Солянка" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Солянка</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Грибной суп">
+                                                    <img src="images/гриб.jpg" alt="Грибной суп" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Грибной</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Тыквенный суп">
+                                                    <img src="images/тыква.jpg" alt="Тыквенный суп" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Тыквенный</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Томатный суп">
+                                                    <img src="images/томат.jpg" alt="Томатный суп" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Томатный</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Лапша">
+                                                    <img src="images/chicken.jpg" alt="Лапша" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Лапша</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Котлета по-киевски">
+                                                    <img src="images/киев.jpg" alt="Котлета по-киевски" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Котлета</span>
+                                                </div>
+                                                <div class="dish-option" data-dish="Плов">
+                                                    <img src="images/плов.jpg" alt="Плов" onerror="this.src='images/default-dish.jpg'">
+                                                    <span>Плов</span>
+                                                </div>
                                             </div>
-                                            <div class="dish-option" data-dish="Солянка">
-                                                <img src="images/solyanka.jpg" alt="Солянка">
-                                                <span>Солянка</span>
-                                            </div>
-                                            <div class="dish-option" data-dish="Грибной суп">
-                                                <img src="" alt="Грибной суп">
-                                                <span>Грибной</span>
-                                            </div>
-                                            <div class="dish-option" data-dish="Тыквенный суп">
-                                                <img src="" alt="Тыквенный суп">
-                                                <span>Тыквенный</span>
-                                            </div>
-                                            <div class="dish-option" data-dish="Томатный суп">
-                                                <img src="images/" alt="Томатный суп">
-                                                <span>Томатный</span>
-                                            </div>
-                                            <div class="dish-option" data-dish="Лапша">
-                                                <img src="images/chicken.jpg" alt="Лапша">
-                                                <span>Лапша</span>
-                                            </div>
+                                            <input type="hidden" id="selectedDish" required>
                                         </div>
-                                        <input type="hidden" id="selectedDish" required>
-                                    </div>
 
                                     <!-- Оценка -->
                                     <div class="form-group">

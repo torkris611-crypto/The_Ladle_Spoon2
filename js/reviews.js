@@ -784,3 +784,6 @@ function closeSuccessModal() {
 function copyBonusCode() {
     ReviewsSystem.copyBonusCode();
 }
+
+
+

@@ -9,7 +9,7 @@
       "dish": "Борщ",
       "date": "2024-01-15",
       "likes": 12,
-      "userAvatar": "https://i.pravatar.cc/100?img=1"
+      "userAvatar": "images/тарелка4.jpg"
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
       "dish": "Котлета по-киевски",
       "date": "2024-01-14",
       "likes": 8,
-      "userAvatar": "https://i.pravatar.cc/100?img=2"
+      "userAvatar": "images/тарелка6.jpg"
     },
     {
       "id": 3,
@@ -28,59 +28,15 @@
       "user_name": "Елена Смирнова",
       "rating": 5,
       "comment": "Лучшая столовая в районе! Часто беру бизнес-ланчи, всегда сытно и вкусно.",
-      "dish": "Бизнес-ланч №1",
+      "dish": "Плов",
       "date": "2024-01-13",
       "likes": 15,
-      "userAvatar": "https://i.pravatar.cc/100?img=3"
-    },
-    {
-      "id": 4,
-      "user_id": 98765,
-      "user_name": "Дмитрий Козлов",
-      "rating": 5,
-      "comment": "Удобно заказывать онлайн. Заказал, пришел через 20 минут - уже готово!",
-      "dish": "Плов",
-      "date": "2024-01-12",
-      "likes": 10,
-      "userAvatar": "https://i.pravatar.cc/100?img=4"
-    },
-    {
-      "id": 5,
-      "user_id": 13579,
-      "user_name": "Ольга Соколова",
-      "rating": 4,
-      "comment": "Вкусно, как дома. Особенно рекомендую салат Цезарь и плов.",
-      "dish": "Салат Цезарь",
-      "date": "2024-01-11",
-      "likes": 7,
-      "userAvatar": "https://i.pravatar.cc/100?img=5"
-    },
-    {
-      "id": 6,
-      "user_id": 24680,
-      "user_name": "Алексей Морозов",
-      "rating": 5,
-      "comment": "Отличная столовая! Всегда свежая еда, приветливый персонал. Рекомендую!",
-      "dish": "Солянка",
-      "date": "2024-01-10",
-      "likes": 9,
-      "userAvatar": "https://i.pravatar.cc/100?img=6"
-    },
-    {
-      "id": 7,
-      "user_id": 11223,
-      "user_name": "Татьяна Волкова",
-      "rating": 4,
-      "comment": "Хорошее место для обеда. Цены приемлемые, порции большие.",
-      "dish": "Грибной суп",
-      "date": "2024-01-09",
-      "likes": 5,
-      "userAvatar": "https://i.pravatar.cc/100?img=7"
+      "userAvatar": "images/тарелка5.jpg"
     }
   ],
   "stats": {
     "avgRating": 4.7,
-    "totalReviews": 7,
-    "recommendPercent": 86
+    "totalReviews": 3,
+    "recommendPercent": 100
   }
 }

@@ -19,6 +19,31 @@
           "is_popular": true,
           "is_new": false
         },
+
+                {
+          "id": 101,
+          "name": "Цезарь с курицей",
+          "description": "Куриное филе, салат романо, пармезан, соус цезарь, гренки",
+          "price": 250,
+          "weight": 250,
+          "calories": 350,
+          "image": "images/киев.jpg",
+          "available": true,
+          "is_popular": true,
+          "is_new": false
+        },
+                        {
+          "id": 101,
+          "name": "Цезарь с курицей",
+          "description": "Куриное филе, салат романо, пармезан, соус цезарь, гренки",
+          "price": 250,
+          "weight": 250,
+          "calories": 350,
+          "image": "images/плов.jpg",
+          "available": true,
+          "is_popular": true,
+          "is_new": false
+        },
         {
           "id": 102,
           "name": "Греческий салат",
@@ -196,7 +221,7 @@
       "description": "Салат + Горячее + Гарнир + Напиток",
       "price": 320,
       "old_price": 0,
-      "image": "images/бизнес2.jpg",
+      "image": "images/бизнес3.jpg",
       "items": [101, 302, 402],
       "available": true,
       "is_popular": false
