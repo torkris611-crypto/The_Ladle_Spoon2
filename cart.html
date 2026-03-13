@@ -615,9 +615,19 @@
 
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем и исправляем данные в корзине
+            cart = (cart || []).map(item => ({
+                ...item,
+                price: Number(item.price) || 0,
+                quantity: Number(item.quantity) || 1
+            }));
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
             loadCart();
             generateTimeSlots();
             updateFSMIndicators();
+            updateCartCount();
         });
 
         // Загрузка корзины
@@ -638,20 +648,25 @@
             summary.classList.remove('hidden');
 
             cart.forEach((item, index) => {
+                // Проверяем и форматируем цену
+                const price = Number(item.price) || 0;
+                const quantity = Number(item.quantity) || 1;
+                const itemTotal = price * quantity;
+                
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
                     <div class="cart-item-image" style="background-image: url('${item.imagePath || 'https://via.placeholder.com/80'}')"></div>
                     <div class="cart-item-info">
-                        <h3>${item.name}</h3>
+                        <h3>${item.name || 'Блюдо'}</h3>
                         <div class="cart-item-category">
                             <i class="fas fa-tag"></i> ${item.category || 'Блюдо'}
                         </div>
                     </div>
-                    <div class="cart-item-price">${item.price} ₽</div>
+                    <div class="cart-item-price">${formatPrice(price)} ₽</div>
                     <div class="cart-item-quantity">
-                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
-                        <span class="quantity-value">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)" ${quantity <= 1 ? 'disabled' : ''}>-</button>
+                        <span class="quantity-value">${quantity}</span>
                         <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
                     </div>
                     <div class="cart-item-actions">
@@ -666,9 +681,18 @@
             updateSummary();
         }
 
+        function formatPrice(price) {
+            const num = Number(price);
+            return isNaN(num) ? '0' : num.toFixed(0);
+        }
+
         // Обновление количества
         function updateQuantity(index, delta) {
-            const newQuantity = cart[index].quantity + delta;
+            if (!cart[index]) return;
+            
+            const currentQuantity = Number(cart[index].quantity) || 1;
+            const newQuantity = currentQuantity + delta;
+            
             if (newQuantity >= 1 && newQuantity <= 99) {
                 cart[index].quantity = newQuantity;
                 localStorage.setItem('cart', JSON.stringify(cart));
@@ -679,10 +703,12 @@
 
         // Удаление товара
         function removeItem(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            loadCart();
-            updateCartCount();
+            if (index >= 0 && index < cart.length) {
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+                updateCartCount();
+            }
         }
 
         // Очистка корзины
@@ -697,18 +723,45 @@
 
         // Обновление итогов
         function updateSummary() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            // Проверяем, что cart существует и это массив
+            if (!cart || !Array.isArray(cart)) {
+                cart = [];
+            }
+            
+            // Безопасное вычисление итогов
+            const totalItems = cart.reduce((sum, item) => {
+                const quantity = Number(item?.quantity) || 0;
+                return sum + quantity;
+            }, 0);
+            
+            const subtotal = cart.reduce((sum, item) => {
+                const price = Number(item?.price) || 0;
+                const quantity = Number(item?.quantity) || 0;
+                return sum + (price * quantity);
+            }, 0);
 
-            document.getElementById('totalItems').textContent = totalItems;
-            document.getElementById('subtotal').textContent = `${subtotal} ₽`;
-            document.getElementById('total').textContent = `${subtotal} ₽`;
-            document.getElementById('checkoutTotal').textContent = `${subtotal} ₽`;
+            // Обновляем элементы с проверкой существования
+            const totalItemsEl = document.getElementById('totalItems');
+            if (totalItemsEl) totalItemsEl.textContent = totalItems;
+            
+            const subtotalEl = document.getElementById('subtotal');
+            if (subtotalEl) subtotalEl.textContent = `${formatPrice(subtotal)} ₽`;
+            
+            const totalEl = document.getElementById('total');
+            if (totalEl) totalEl.textContent = `${formatPrice(subtotal)} ₽`;
+            
+            const checkoutTotalEl = document.getElementById('checkoutTotal');
+            if (checkoutTotalEl) checkoutTotalEl.textContent = `${formatPrice(subtotal)} ₽`;
         }
+
 
         // Обновление счетчика в шапке
         function updateCartCount() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const count = cart.reduce((sum, item) => {
+                const quantity = Number(item?.quantity) || 0;
+                return sum + quantity;
+            }, 0);
+            
             const cartCounts = document.querySelectorAll('.cart-count');
             cartCounts.forEach(el => {
                 if (el) el.textContent = count;
@@ -749,9 +802,9 @@
 
         // Подтверждение заказа
         function confirmOrder() {
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-            const comments = document.getElementById('comments').value;
+            const name = document.getElementById('customerName')?.value || '';
+            const phone = document.getElementById('customerPhone')?.value || '';
+            const comments = document.getElementById('comments')?.value || '';
 
             if (!name || !phone) {
                 alert('Заполните все обязательные поля');
@@ -767,6 +820,13 @@
             currentOrder.phone = phone;
             currentOrder.comments = comments;
 
+            // Вычисляем итог с проверкой
+            const total = cart.reduce((sum, item) => {
+                const price = Number(item?.price) || 0;
+                const quantity = Number(item?.quantity) || 0;
+                return sum + (price * quantity);
+            }, 0);
+
             // Генерируем номер заказа
             const orderNumber = Math.floor(100 + Math.random() * 900);
             
@@ -775,20 +835,32 @@
             orders.push({
                 number: orderNumber,
                 date: new Date().toISOString(),
-                items: [...cart],
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                customer: currentOrder,
+                items: cart.map(item => ({
+                    ...item,
+                    price: Number(item.price) || 0,
+                    quantity: Number(item.quantity) || 1
+                })),
+                total: total,
+                customer: {...currentOrder},
                 status: 'новый'
             });
             localStorage.setItem('orders', JSON.stringify(orders));
 
             // Обновляем подтверждение
-            document.getElementById('orderNumber').textContent = orderNumber;
-            document.getElementById('confirmName').textContent = name;
-            document.getElementById('confirmPhone').textContent = phone;
-            document.getElementById('confirmTime').textContent = currentOrder.time;
-            document.getElementById('confirmAmount').textContent = 
-                `${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)} ₽`;
+            const orderNumberEl = document.getElementById('orderNumber');
+            if (orderNumberEl) orderNumberEl.textContent = orderNumber;
+            
+            const confirmNameEl = document.getElementById('confirmName');
+            if (confirmNameEl) confirmNameEl.textContent = name;
+            
+            const confirmPhoneEl = document.getElementById('confirmPhone');
+            if (confirmPhoneEl) confirmPhoneEl.textContent = phone;
+            
+            const confirmTimeEl = document.getElementById('confirmTime');
+            if (confirmTimeEl) confirmTimeEl.textContent = currentOrder.time;
+            
+            const confirmAmountEl = document.getElementById('confirmAmount');
+            if (confirmAmountEl) confirmAmountEl.textContent = `${formatPrice(total)} ₽`;
 
             // Очищаем корзину
             cart = [];
@@ -821,6 +893,41 @@
             
             updateFSMIndicators();
         }
+
+        // Функция для валидации данных в корзине
+        function validateCartData() {
+            if (!cart || !Array.isArray(cart)) {
+                cart = [];
+                return;
+            }
+            
+            // Исправляем некорректные данные
+            cart = cart.map(item => {
+                if (!item || typeof item !== 'object') {
+                    return null;
+                }
+                
+                return {
+                    ...item,
+                    price: Number(item.price) || 0,
+                    quantity: Math.max(1, Number(item.quantity) || 1),
+                    name: item.name || 'Блюдо',
+                    category: item.category || 'Блюдо',
+                    imagePath: item.imagePath || 'https://via.placeholder.com/80'
+                };
+            }).filter(item => item !== null); // Удаляем некорректные элементы
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Вызовите эту функцию при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            validateCartData();
+            loadCart();
+            generateTimeSlots();
+            updateFSMIndicators();
+            updateCartCount();
+        });
 
         // Обновление индикаторов FSM
         function updateFSMIndicators() {
