@@ -866,3 +866,83 @@
         justify-content: center;
     }
 }
+
+/* Стили для последних отзывов */
+.recent-reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.recent-review-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.recent-review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.recent-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recent-review-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recent-review-name {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.recent-review-rating {
+    color: var(--warning-color);
+    font-size: 14px;
+}
+
+.recent-review-text {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    font-style: italic;
+}
+
+.recent-review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #999;
+}
+
+.recent-review-dish i,
+.recent-review-date i {
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.recent-review-dish {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+.recent-review-date {
+    color: #999;
+}

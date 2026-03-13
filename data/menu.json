@@ -4,147 +4,176 @@
     {
       "id": 1,
       "name": "Салаты",
-      "name_en": "Salads",
       "sort_order": 1,
-      "image": "/images/categories/salads.jpg",
+      "image": "images/тарелка1.jpg",
       "items": [
         {
           "id": 101,
           "name": "Цезарь с курицей",
-          "name_en": "Chicken Caesar",
           "description": "Куриное филе, салат романо, пармезан, соус цезарь, гренки",
           "price": 250,
-          "old_price": 0,
           "weight": 250,
           "calories": 350,
-          "allergens": ["gluten", "dairy", "eggs"],
-          "image": "/images/dishes/caesar.jpg",
+          "image": "images/cezarjpg",
           "available": true,
           "is_popular": true,
-          "is_new": false,
-          "sort_order": 1,
-          "created_at": "2024-01-01T10:00:00"
+          "is_new": false
         },
         {
           "id": 102,
           "name": "Греческий салат",
-          "name_en": "Greek Salad",
           "description": "Свежие огурцы, помидоры, перец, маслины, сыр фета",
           "price": 220,
-          "old_price": 0,
           "weight": 200,
           "calories": 180,
-          "allergens": ["dairy"],
-          "image": "/images/dishes/greek.jpg",
+          "image": "images/грек.jpg",
           "available": true,
           "is_popular": false,
-          "is_new": true,
-          "sort_order": 2,
-          "created_at": "2024-02-15T14:30:00"
+          "is_new": true
+        },
+        {
+          "id": 103,
+          "name": "Оливье",
+          "description": "Классический салат с мясом",
+          "price": 170,
+          "weight": 200,
+          "calories": 250,
+          "image": "images/оливье.jpg",
+          "available": true,
+          "is_popular": true,
+          "is_new": false
         }
       ]
     },
     {
       "id": 2,
       "name": "Супы",
-      "name_en": "Soups",
       "sort_order": 2,
-      "image": "/images/categories/soups.jpg",
+      "image": "images/тарелка2.jpg",
       "items": [
         {
           "id": 201,
           "name": "Борщ украинский",
-          "name_en": "Ukrainian Borscht",
           "description": "Наваристый борщ с мясом, свеклой, сметаной и зеленью",
           "price": 180,
-          "old_price": 200,
           "weight": 300,
           "calories": 220,
-          "allergens": [],
-          "image": "/images/dishes/borscht.jpg",
+          "image": "images/borshjpg",
           "available": true,
           "is_popular": true,
-          "is_new": false,
-          "sort_order": 1,
-          "created_at": "2024-01-01T10:00:00"
+          "is_new": false
+        },
+        {
+          "id": 202,
+          "name": "Солянка",
+          "description": "Сытный мясной суп с оливками и лимоном",
+          "price": 200,
+          "weight": 300,
+          "calories": 250,
+          "image": "images/solyanka.jpg",
+          "available": true,
+          "is_popular": true,
+          "is_new": false
+        },
+        {
+          "id": 203,
+          "name": "Грибной суп",
+          "description": "Ароматный суп из лесных грибов",
+          "price": 160,
+          "weight": 300,
+          "calories": 150,
+          "image": "images/гриб.jpg",
+          "available": true,
+          "is_popular": false,
+          "is_new": true
         }
       ]
     },
     {
       "id": 3,
       "name": "Горячее",
-      "name_en": "Main Courses",
       "sort_order": 3,
-      "image": "/images/categories/hot.jpg",
+      "image": "images/тарелка3.jpg",
       "items": [
         {
           "id": 301,
           "name": "Котлета по-киевски",
-          "name_en": "Chicken Kiev",
           "description": "Куриная котлета с маслом внутри, картофельное пюре",
           "price": 320,
-          "old_price": 0,
           "weight": 350,
           "calories": 450,
-          "allergens": ["eggs", "gluten"],
-          "image": "/images/dishes/kiev.jpg",
+          "image": "images/киев.jpg",
           "available": true,
           "is_popular": true,
-          "is_new": false,
-          "sort_order": 1,
-          "created_at": "2024-01-01T10:00:00"
+          "is_new": false
+        },
+        {
+          "id": 302,
+          "name": "Плов",
+          "description": "Ароматный узбекский плов с бараниной",
+          "price": 280,
+          "weight": 300,
+          "calories": 400,
+          "image": "images/плов.jpg",
+          "available": true,
+          "is_popular": true,
+          "is_new": false
+        },
+        {
+          "id": 303,
+          "name": "Рыба жареная",
+          "description": "Сочная рыба с золотистой корочкой",
+          "price": 320,
+          "weight": 250,
+          "calories": 300,
+          "image": "images/рыба.jpg",
+          "available": true,
+          "is_popular": false,
+          "is_new": true
         }
       ]
     },
     {
       "id": 4,
       "name": "Гарниры",
-      "name_en": "Side Dishes",
       "sort_order": 4,
-      "image": "/images/categories/sides.jpg",
+      "image": "images/тарелка4.jpg",
       "items": [
         {
           "id": 401,
-          "name": "Картофельное пюре",
-          "name_en": "Mashed Potatoes",
-          "description": "Нежное пюре со сливочным маслом",
-          "price": 80,
-          "old_price": 0,
+          "name": "Гречка",
+          "description": "Рассчпчатая гречка",
+          "price": 70,
           "weight": 150,
-          "calories": 180,
-          "allergens": ["dairy"],
-          "image": "/images/dishes/mashed.jpg",
+          "calories": 150,
+          "image": "images/греча.jpg",
           "available": true,
           "is_popular": false,
-          "is_new": false,
-          "sort_order": 1,
-          "created_at": "2024-01-01T10:00:00"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "name": "Напитки",
-      "name_en": "Drinks",
-      "sort_order": 5,
-      "image": "/images/categories/drinks.jpg",
-      "items": [
+          "is_new": false
+        },
         {
-          "id": 501,
-          "name": "Компот из сухофруктов",
-          "name_en": "Dried Fruit Compote",
-          "description": "Домашний компот, 250 мл",
-          "price": 50,
-          "old_price": 0,
-          "weight": 250,
-          "calories": 90,
-          "allergens": [],
-          "image": "/images/dishes/compote.jpg",
+          "id": 402,
+          "name": "Рис",
+          "description": "Отварной рис",
+          "price": 70,
+          "weight": 150,
+          "calories": 160,
+          "image": "images/рис.jpg",
+          "available": true,
+          "is_popular": false,
+          "is_new": false
+        },
+        {
+          "id": 403,
+          "name": "Картофельное пюре",
+          "description": "Нежное пюре со сливочным маслом",
+          "price": 80,
+          "weight": 150,
+          "calories": 180,
+          "image": "images/картофельвкусный.jpg",
           "available": true,
           "is_popular": true,
-          "is_new": false,
-          "sort_order": 1,
-          "created_at": "2024-01-01T10:00:00"
+          "is_new": false
         }
       ]
     }
@@ -152,61 +181,36 @@
   "business_lunches": [
     {
       "id": 1001,
-      "name": "Бизнес-ланч №1 Эконом",
-      "name_en": "Business Lunch #1 Economy",
+      "name": "Бизнес-ланч №1",
       "description": "Суп + Горячее + Гарнир + Напиток",
       "price": 280,
       "old_price": 320,
-      "image": "/images/lunches/lunch1.jpg",
-      "items": [201, 301, 401, 501],
+      "image": "images/Бизнес.jpg",
+      "items": [201, 301, 401],
       "available": true,
-      "is_popular": true,
-      "available_until": "15:00",
-      "sort_order": 1,
-      "created_at": "2024-01-01T10:00:00"
+      "is_popular": true
     },
     {
       "id": 1002,
-      "name": "Бизнес-ланч №2 Салат",
-      "name_en": "Business Lunch #2 with Salad",
+      "name": "Бизнес-ланч №2",
       "description": "Салат + Горячее + Гарнир + Напиток",
       "price": 320,
       "old_price": 0,
-      "image": "/images/lunches/lunch2.jpg",
-      "items": [101, 301, 401, 501],
+      "image": "images/бизнес2.jpg",
+      "items": [101, 302, 402],
       "available": true,
-      "is_popular": false,
-      "available_until": "15:00",
-      "sort_order": 2,
-      "created_at": "2024-01-01T10:00:00"
+      "is_popular": false
     },
     {
       "id": 1003,
-      "name": "Бизнес-ланч №3 Люкс",
-      "name_en": "Business Lunch #3 Lux",
+      "name": "Бизнес-ланч №3",
       "description": "Салат + Суп + Горячее + Гарнир + Напиток",
       "price": 380,
       "old_price": 420,
-      "image": "/images/lunches/lunch3.jpg",
-      "items": [101, 201, 301, 401, 501],
+      "image": "images/бизнес3.jpg",
+      "items": [102, 202, 303, 403],
       "available": true,
-      "is_popular": true,
-      "available_until": "15:00",
-      "sort_order": 3,
-      "created_at": "2024-01-01T10:00:00"
-    }
-  ],
-  "specials": [
-    {
-      "id": 2001,
-      "name": "Скидка 20% на первые 3 заказа",
-      "description": "Для новых клиентов",
-      "type": "discount",
-      "value": 20,
-      "code": "NEW2024",
-      "active": true,
-      "start_date": "2024-01-01",
-      "end_date": "2024-12-31"
+      "is_popular": true
     }
   ]
 }

@@ -1094,4 +1094,39 @@ body {
         justify-content: center;
     }
 }
+/* Стили для изображений */
+.offer-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s;
+}
 
+.offer-card:hover .offer-image {
+    transform: scale(1.05);
+}
+
+.review-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+/* Фолбэк для изображений */
+.offer-image[style*="undefined"],
+.offer-image:not([style*="url"]) {
+    background: linear-gradient(135deg, #f6f9fc, #e6f0f5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 24px;
+}
+
+.offer-image[style*="undefined"]::after,
+.offer-image:not([style*="url"])::after {
+    content: "🍽️";
+}

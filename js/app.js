@@ -262,3 +262,209 @@ window.onclick = function(event) {
     }
 }
 
+// Данные для бизнес-ланчей с локальными картинками
+const businessLunches = [
+    {
+        id: 1,
+        name: "Бизнес-ланч №1",
+        description: "Суп дня, горячее с гарниром, салат, напиток",
+        price: 350,
+        image: "images/Бизнес.jpg"
+    },
+    {
+        id: 2,
+        name: "Бизнес-ланч №2",
+        description: "Два горячих блюда на выбор, салат, напиток",
+        price: 420,
+        image: "images/бизнес1.jpg"
+    },
+    {
+        id: 3,
+        name: "Бизнес-ланч №3",
+        description: "Фирменное блюдо, суп, закуска, десерт",
+        price: 480,
+        image: "images/бизнес3.jpg"
+    }
+];
+
+// Популярные блюда
+const popularItems = [
+    {
+        id: 1,
+        name: "Борщ с пампушками",
+        description: "Традиционный украинский борщ",
+        price: 180,
+        image: "images/гриб.jpg"
+    },
+    {
+        id: 2,
+        name: "Котлета по-киевски",
+        description: "Сливочное масло внутри, хрустящая корочка",
+        price: 250,
+        image: "images/рыба.jpg"
+    },
+    {
+        id: 3,
+        name: "Салат Цезарь",
+        description: "С курицей, пармезаном и соусом",
+        price: 220,
+        image: "images/тарелка1.jpg"
+    },
+    {
+        id: 4,
+        name: "Картофель фри",
+        description: "Хрустящий, золотистый",
+        price: 120,
+        image: "images/тыква.jpg"
+    }
+];
+
+// Отзывы с аватарками
+const reviews = [
+    {
+        id: 1,
+        author: "Анна",
+        avatar: "images/томат.jpg",
+        rating: 5,
+        text: "Очень вкусно готовят! Особенно понравился борщ. Всегда свежее и горячее."
+    },
+    {
+        id: 2,
+        author: "Михаил",
+        avatar: "images/тарелка6.jpg",
+        rating: 4,
+        text: "Хорошее место для обеда. Быстрое обслуживание, демократичные цены."
+    },
+    {
+        id: 3,
+        author: "Елена",
+        avatar: "images/тарелка4.jpg",
+        rating: 5,
+        text: "Удобно заказывать онлайн. Всегда готовы к назначенному времени."
+    }
+];
+
+// Загрузка данных при открытии страницы
+document.addEventListener('DOMContentLoaded', function() {
+    loadBusinessLunches();
+    loadPopularItems();
+    loadReviews();
+    updateCartCount();
+});
+
+// Загрузка бизнес-ланчей
+function loadBusinessLunches() {
+    const container = document.getElementById('business-lunches');
+    if (!container) return;
+
+    container.innerHTML = businessLunches.map(lunch => `
+        <div class="offer-card">
+            <div class="offer-image" style="background-image: url('${lunch.image}')"></div>
+            <div class="offer-content">
+                <h3 class="offer-title">${lunch.name}</h3>
+                <p class="offer-description">${lunch.description}</p>
+                <div class="offer-price">${lunch.price} ₽</div>
+                <button class="offer-button" onclick="addToCart(${lunch.id}, '${lunch.name}', ${lunch.price}, '${lunch.image}')">
+                    В корзину
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Загрузка популярных блюд
+function loadPopularItems() {
+    const container = document.getElementById('popular-items');
+    if (!container) return;
+
+    container.innerHTML = popularItems.map(item => `
+        <div class="offer-card">
+            <div class="offer-image" style="background-image: url('${item.image}')"></div>
+            <div class="offer-content">
+                <h3 class="offer-title">${item.name}</h3>
+                <p class="offer-description">${item.description}</p>
+                <div class="offer-price">${item.price} ₽</div>
+                <button class="offer-button" onclick="addToCart(${item.id}, '${item.name}', ${item.price}, '${item.image}')">
+                    В корзину
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Загрузка отзывов
+function loadReviews() {
+    const container = document.getElementById('reviews');
+    if (!container) return;
+
+    container.innerHTML = reviews.map(review => `
+        <div class="review-card">
+            <div class="review-header">
+                <img src="${review.avatar}" alt="${review.author}" class="review-avatar">
+                <div>
+                    <div class="review-author">${review.author}</div>
+                    <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                </div>
+            </div>
+            <div class="review-text">${review.text}</div>
+        </div>
+    `).join('');
+}
+
+// Добавление в корзину
+function addToCart(id, name, price, image) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    const existingItem = cart.find(item => item.id === id);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: id,
+            name: name,
+            price: price,
+            image: image,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    alert('Товар добавлен в корзину!');
+}
+
+// Обновление счетчика корзины
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCounts = document.querySelectorAll('.cart-count');
+    cartCounts.forEach(el => {
+        if (el) el.textContent = count;
+    });
+}
+
+// Функции для модального окна
+function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'block';
+}
+
+function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    const userId = document.getElementById('userId').value;
+    localStorage.setItem('userId', userId);
+    document.querySelector('.login-btn').classList.add('hidden');
+    document.querySelector('.user-info').classList.remove('hidden');
+    document.querySelector('.user-name').textContent = `User ${userId}`;
+    closeLoginModal();
+}
+
+function logout() {
+    localStorage.removeItem('userId');
+    document.querySelector('.login-btn').classList.remove('hidden');
+    document.querySelector('.user-info').classList.add('hidden');
+}
