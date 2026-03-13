@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все отзывы | Столовая</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Шапка как в index.html -->
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>Столовая</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                    <a href="menu.html"><i class="fas fa-book-open"></i> Меню</a>
+                    <a href="reviews.html" class="active"><i class="fas fa-star"></i> Отзывы</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count">0</span></a>
+                    <a href="orders.html"><i class="fas fa-clipboard-list"></i> Заказы</a>
+                </nav>
+                <div class="user-menu">
+                    <button class="login-btn" onclick="showLoginModal()">Войти</button>
+                    <div class="user-info hidden">
+                        <span class="user-name"></span>
+                        <button class="logout-btn" onclick="logout()">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Hero секция -->
+            <section class="reviews-hero">
+                <div class="container">
+                    <h1>Все отзывы</h1>
+                    <p>Более 1000 довольных клиентов уже оценили наши блюда</p>
+                </div>
+            </section>
+
+            <!-- Фильтры и поиск -->
+            <section class="reviews-filters-section">
+                <div class="container">
+                    <div class="filters-wrapper">
+                        <div class="filter-group">
+                            <select id="ratingFilter" class="filter-select">
+                                <option value="all">Все оценки</option>
+                                <option value="5">5 звезд ★★★★★</option>
+                                <option value="4">4 звезды ★★★★☆</option>
+                                <option value="3">3 звезды ★★★☆☆</option>
+                                <option value="2">2 звезды ★★☆☆☆</option>
+                                <option value="1">1 звезда ★☆☆☆☆</option>
+                            </select>
+
+                            <select id="dishFilter" class="filter-select">
+                                <option value="all">Все блюда</option>
+                                <option value="Борщ">Борщ</option>
+                                <option value="Солянка">Солянка</option>
+                                <option value="Грибной суп">Грибной суп</option>
+                                <option value="Тыквенный суп">Тыквенный суп</option>
+                                <option value="Томатный суп">Томатный суп</option>
+                                <option value="Лапша">Лапша</option>
+                            </select>
+
+                            <select id="sortFilter" class="filter-select">
+                                <option value="newest">Сначала новые</option>
+                                <option value="oldest">Сначала старые</option>
+                                <option value="highest">Высокий рейтинг</option>
+                                <option value="lowest">Низкий рейтинг</option>
+                            </select>
+                        </div>
+
+                        <div class="search-group">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchInput" placeholder="Поиск по отзывам...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Статистика -->
+                    <div class="all-reviews-stats">
+                        <div class="stat-badge">
+                            <i class="fas fa-star"></i>
+                            <span>Средний рейтинг: <strong id="avgRatingAll">4.8</strong></span>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fas fa-comment"></i>
+                            <span>Всего отзывов: <strong id="totalReviewsAll">156</strong></span>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>Рекомендуют: <strong id="recommendPercentAll">92%</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Сетка всех отзывов -->
+            <section class="all-reviews-content">
+                <div class="container">
+                    <div class="all-reviews-grid" id="allReviewsGrid">
+                        <!-- Отзывы будут загружаться через JS -->
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i> Загрузка отзывов...
+                        </div>
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="pagination" id="pagination">
+                        <!-- Пагинация будет загружаться через JS -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Подвал как в index.html -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <h3>Столовая</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> ул. Примерная, д. 123</p>
+                        <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
+                        <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Навигация</h4>
+                        <ul>
+                            <li><a href="menu.html">Меню</a></li>
+                            <li><a href="cart.html">Корзина</a></li>
+                            <li><a href="orders.html">Заказы</a></li>
+                            <li><a href="reviews.html">Оставить отзыв</a></li>
+                            <li><a href="all-reviews.html">Все отзывы</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-social">
+                        <h4>Мы в соцсетях</h4>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-vk"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Столовая Антона. Все права защищены.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Вход в систему</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="userId">Ваш Telegram ID:</label>
+                    <input type="text" id="userId" placeholder="Введите ваш Telegram ID" required>
+                    <small>Как узнать ID? Напишите @userinfobot в Telegram</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/reviews.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы | Столовая</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- ШАПКА КАК В INDEX.HTML -->
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>Столовая</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                    <a href="menu.html"><i class="fas fa-book-open"></i> Меню</a>
+                    <a href="reviews.html" class="active"><i class="fas fa-star"></i> Отзывы</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count">0</span></a>
+                    <a href="orders.html"><i class="fas fa-clipboard-list"></i> Заказы</a>
+                    <a href="admin.html"><i class="fas fa-cog"></i> Админ</a>
+                </nav>
+                <div class="user-menu">
+                    <button class="login-btn" onclick="showLoginModal()">Войти</button>
+                    <div class="user-info hidden">
+                        <span class="user-name"></span>
+                        <button class="logout-btn" onclick="logout()">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Hero секция -->
+            <section class="reviews-hero">
+                <div class="container">
+                    <h1>Отзывы наших гостей</h1>
+                    <p>Нам важно ваше мнение! Поделитесь впечатлениями о наших блюдах</p>
+                </div>
+            </section>
+
+            <!-- Основной контент -->
+            <section class="reviews-content">
+                <div class="container">
+                    <div class="reviews-layout">
+                        <!-- Левая колонка - Форма отзыва -->
+                        <div class="reviews-form-column">
+                            <div class="review-form-card">
+                                <div class="form-header">
+                                    <i class="fas fa-pen-fancy"></i>
+                                    <h2>Оставить отзыв</h2>
+                                    <p>Расскажите о вашем опыте и помогите нам стать лучше</p>
+                                </div>
+
+                                <form id="reviewForm" class="review-form">
+                                    <!-- Номер заказа -->
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-hashtag"></i>
+                                            Номер заказа
+                                        </label>
+                                        <input type="text" id="orderNumber" placeholder="Например: 12345" required>
+                                        <small class="input-hint">Номер заказа можно найти в чеке</small>
+                                    </div>
+
+                                    <!-- Выбор блюда -->
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-utensil-spoon"></i>
+                                            Выберите блюдо
+                                        </label>
+                                        <div class="dish-selector" id="dishSelector">
+                                            <div class="dish-option" data-dish="Борщ">
+                                                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=100" alt="Борщ">
+                                                <span>Борщ</span>
+                                            </div>
+                                            <div class="dish-option" data-dish="Солянка">
+                                                <img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=100" alt="Солянка">
+                                                <span>Солянка</span>
+                                            </div>
+                                            <div class="dish-option" data-dish="Грибной суп">
+                                                <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=100" alt="Грибной суп">
+                                                <span>Грибной</span>
+                                            </div>
+                                            <div class="dish-option" data-dish="Тыквенный суп">
+                                                <img src="https://images.unsplash.com/photo-1574484288612-6a298c6d6e9b?w=100" alt="Тыквенный суп">
+                                                <span>Тыквенный</span>
+                                            </div>
+                                            <div class="dish-option" data-dish="Томатный суп">
+                                                <img src="https://images.unsplash.com/photo-1547592166-23ac45744ac0?w=100" alt="Томатный суп">
+                                                <span>Томатный</span>
+                                            </div>
+                                            <div class="dish-option" data-dish="Лапша">
+                                                <img src="https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=100" alt="Лапша">
+                                                <span>Лапша</span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="selectedDish" required>
+                                    </div>
+
+                                    <!-- Оценка -->
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-star"></i>
+                                            Ваша оценка
+                                        </label>
+                                        <div class="rating-container">
+                                            <div class="rating-stars-input">
+                                                <input type="radio" id="star5" name="rating" value="5" required>
+                                                <label for="star5" title="5 звезд">★</label>
+                                                <input type="radio" id="star4" name="rating" value="4">
+                                                <label for="star4" title="4 звезды">★</label>
+                                                <input type="radio" id="star3" name="rating" value="3">
+                                                <label for="star3" title="3 звезды">★</label>
+                                                <input type="radio" id="star2" name="rating" value="2">
+                                                <label for="star2" title="2 звезды">★</label>
+                                                <input type="radio" id="star1" name="rating" value="1">
+                                                <label for="star1" title="1 звезда">★</label>
+                                            </div>
+                                            <div class="rating-labels">
+                                                <span>Плохо</span>
+                                                <span>Отлично</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Комментарий -->
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-comment"></i>
+                                            Ваш отзыв
+                                        </label>
+                                        <textarea id="reviewComment" rows="5" placeholder="Поделитесь впечатлениями о вкусе, обслуживании..." required></textarea>
+                                        <div class="textarea-footer">
+                                            <span class="char-counter">0/500</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Фото -->
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-camera"></i>
+                                            Добавить фото (необязательно)
+                                        </label>
+                                        <div class="photo-upload-area" id="photoUploadArea">
+                                            <input type="file" id="photoInput" accept="image/*" hidden>
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Нажмите для загрузки или перетащите фото</p>
+                                            <span class="upload-hint">Максимум 5 МБ</span>
+                                        </div>
+                                        <div class="photo-preview" id="photoPreview"></div>
+                                    </div>
+
+                                    <!-- Согласие -->
+                                    <div class="form-group checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="agreementCheck" required>
+                                            <span class="checkbox-custom"></span>
+                                            <span class="checkbox-text">
+                                                Я согласен на обработку персональных данных
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                    <!-- Кнопка -->
+                                    <button type="submit" class="submit-review-btn">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Отправить отзыв
+                                    </button>
+                                </form>
+
+                                <!-- Бонус -->
+                                <div class="review-bonus">
+                                    <i class="fas fa-gift"></i>
+                                    <div class="bonus-text">
+                                        <strong>Бонус за отзыв!</strong>
+                                        <p>Получите скидку 10% на следующий заказ</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка - Последние отзывы -->
+                        <div class="recent-reviews-column">
+                            <div class="recent-reviews-header">
+                                <h3>Последние отзывы</h3>
+                                <a href="all-reviews.html" class="view-all-link">
+                                    Все отзывы <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <div class="recent-reviews-list" id="recentReviewsList">
+                                <!-- Загружается из JS -->
+                            </div>
+
+                            <!-- Статистика -->
+                            <div class="reviews-stats-card">
+                                <h4>Статистика</h4>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-number" id="avgRating">4.8</div>
+                                        <div class="stat-label">Средняя оценка</div>
+                                        <div class="stat-stars" id="avgStars">★★★★★</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number" id="totalReviews">156</div>
+                                        <div class="stat-label">Всего отзывов</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number" id="recommendPercent">92%</div>
+                                        <div class="stat-label">Рекомендуют</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Модальное окно успеха -->
+            <div class="success-modal" id="successModal">
+                <div class="success-modal-content">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Спасибо за отзыв!</h2>
+                    <p>Ваше мнение очень важно для нас. Бонусный купон уже на вашей почте.</p>
+                    <div class="bonus-code">
+                        <span>LADLE10</span>
+                        <button onclick="copyBonusCode()">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <button class="close-success-btn" onclick="closeSuccessModal()">
+                        Продолжить
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Подвал КАК В INDEX.HTML -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <h3>Столовая</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> ул. Примерная, д. 123</p>
+                        <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
+                        <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Навигация</h4>
+                        <ul>
+                            <li><a href="menu.html">Меню</a></li>
+                            <li><a href="cart.html">Корзина</a></li>
+                            <li><a href="orders.html">Заказы</a></li>
+                            <li><a href="reviews.html">Отзывы</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-social">
+                        <h4>Мы в соцсетях</h4>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-vk"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Столовая Антона. Все права защищены.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно входа (как в index.html) -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Вход в систему</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="userId">Ваш Telegram ID:</label>
+                    <input type="text" id="userId" placeholder="Введите ваш Telegram ID" required>
+                    <small>Как узнать ID? Напишите @userinfobot в Telegram</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/reviews.js"></script>
+</body>
+</html>
