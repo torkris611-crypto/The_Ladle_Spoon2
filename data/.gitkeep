@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # JSON файлы создаются автоматически при первом запуске
 # - menu.json
 # - users.json  
@@ -5,3 +6,12 @@
 # - reviews.json
 # - blacklist.json
 # - settings.json
+=======
+# JSON файлы создаются автоматически при первом запуске
+# - menu.json
+# - users.json  
+# - orders.json
+# - reviews.json
+# - blacklist.json
+# - settings.json
+>>>>>>> fa74b80a9d8254ad0e8456f9c3f27135ab763c1e

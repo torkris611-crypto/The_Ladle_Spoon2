@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню на сегодня - The Ladle Spoon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-header {
+            background: white;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .home-btn {
+            padding: 10px 20px;
+            background: #718096;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .home-btn:hover {
+            background: #4a5568;
+        }
+
+        .menu-header h1 {
+            color: #333;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .cart-icon:hover {
+            background: #5a67d8;
+        }
+
+        .cart-count {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .menu-content {
+            background: white;
+            border-radius: 0 0 15px 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+
+        .fsm-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .fsm-state {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            margin: 0 5px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            color: #4a5568;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .fsm-state.active {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .category-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .item-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .item-info {
+            padding: 20px;
+        }
+
+        .item-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .item-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .item-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .select-item-btn {
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .select-item-btn:hover {
+            background: #5a67d8;
+        }
+
+        .quantity-selector {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .quantity-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: #667eea;
+            color: white;
+            font-size: 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: #5a67d8;
+        }
+
+        .quantity-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .quantity-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-back {
+            background: #718096;
+            color: white;
+            margin-bottom: 20px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-back:hover {
+            background: #4a5568;
+        }
+
+        .selected-item-info {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .selected-item-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .selected-item-info p {
+            color: #666;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #a0aec0;
+            font-size: 18px;
+            padding: 60px 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .navigation-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu-header">
+            <div class="header-left">
+                <a href="index.html" class="home-btn">
+                    <i class="fas fa-home"></i> 
+                    <span>Главная</span>
+                </a>
+                <h1>
+                    <span>🍽</span>
+                    Меню на сегодня
+                </h1>
+            </div>
+            <div class="header-right">
+                <a href="cart.html" class="cart-icon">
+                    <span>🛒</span>
+                    <span>Корзина</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="menu-content">
+            <!-- FSM States Indicator -->
+            <div class="fsm-indicator">
+                <div class="fsm-state" id="stateCategories" data-state="categories">Категории</div>
+                <div class="fsm-state" id="stateItems" data-state="items">Выбор блюда</div>
+                <div class="fsm-state" id="stateQuantity" data-state="quantity">Количество</div>
+                <div class="fsm-state" id="stateConfirm" data-state="confirm">Подтверждение</div>
+            </div>
+
+            <!-- Navigation Bar -->
+            <div class="navigation-bar">
+                <button class="btn btn-back" id="backBtn" onclick="handleBack()">← Назад</button>
+            </div>
+
+            <!-- Categories View -->
+            <div id="categoriesView">
+                <h2 style="margin-bottom: 20px;">Выберите категорию</h2>
+                <div class="categories-grid" id="categoriesContainer">
+                    <!-- Categories will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Items View -->
+            <div id="itemsView" class="hidden">
+                <h2 style="margin-bottom: 20px;" id="selectedCategoryTitle">Блюда категории</h2>
+                <div class="items-grid" id="itemsContainer">
+                    <!-- Items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Quantity View -->
+            <div id="quantityView" class="hidden">
+                <h2 style="margin-bottom: 20px;">Выберите количество</h2>
+                <div class="selected-item-info" id="selectedItemInfo">
+                    <!-- Selected item info will be displayed here -->
+                </div>
+                <div class="quantity-selector">
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(-1)" id="decreaseBtn">-</button>
+                        <span class="quantity-value" id="quantityValue">1</span>
+                        <button class="quantity-btn" onclick="updateQuantity(1)" id="increaseBtn">+</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" onclick="changeState('items')">Отмена</button>
+                        <button class="btn btn-primary" onclick="addToCart()">Добавить в корзину</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm View -->
+            <div id="confirmView" class="hidden">
+                <h2 style="margin-bottom: 20px;">Подтверждение</h2>
+                <div class="selected-item-info" id="confirmItemInfo">
+                    <!-- Confirmation info will be displayed here -->
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="changeState('quantity')">Изменить</button>
+                    <button class="btn btn-primary" onclick="confirmAddToCart()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        // FSM States
+        const FSM_STATES = {
+            CATEGORIES: 'categories',
+            ITEMS: 'items',
+            QUANTITY: 'quantity',
+            CONFIRM: 'confirm'
+        };
+
+        // Current state
+        let currentState = FSM_STATES.CATEGORIES;
+
+        // Selected data
+        let selectedCategory = null;
+        let selectedItem = null;
+        let selectedQuantity = 1;
+
+        // Cart data
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Mock menu data с путями к локальным изображениям (без иконок еды)
+        const menuData = {
+            "categories": [
+                {
+                    "id": 1,
+                    "name": "Супы",
+                    "description": "Горячие супы на любой вкус",
+                    "items": [
+                        {
+                            "id": 101,
+                            "name": "Борщ",
+                            "description": "Традиционный украинский борщ с мясом и сметаной",
+                            "price": 350,
+                            "imagePath": "images/borsh.jpg"
+                        },
+                        {
+                            "id": 102,
+                            "name": "Солянка",
+                            "description": "Сборная мясная солянка с лимоном и маслинами",
+                            "price": 400,
+                            "imagePath": "images/solyanka.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Салаты",
+                    "description": "Свежие салаты",
+                    "items": [
+                        {
+                            "id": 201,
+                            "name": "Цезарь",
+                            "description": "Курица, салат айсберг, пармезан, соус цезарь",
+                            "price": 450,
+                            "imagePath": "images/cezar.jpg"
+                        },
+                        {
+                            "id": 202,
+                            "name": "Греческий",
+                            "description": "Свежие овощи, сыр фета, оливки",
+                            "price": 380,
+                            "imagePath": "images/grecheskiy.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "Горячие блюда",
+                    "description": "Основные блюда",
+                    "items": [
+                        {
+                            "id": 301,
+                            "name": "Стейк из говядины",
+                            "description": "Говяжий стейк прожарки medium с овощами гриль",
+                            "price": 890,
+                            "imagePath": "images/steak.jpg"
+                        },
+                        {
+                            "id": 302,
+                            "name": "Куриная грудка",
+                            "description": "Запеченная куриная грудка с пряными травами",
+                            "price": 550,
+                            "imagePath": "images/chicken.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "name": "Десерты",
+                    "description": "Сладкие угощения",
+                    "items": [
+                        {
+                            "id": 401,
+                            "name": "Тирамису",
+                            "description": "Классический итальянский десерт",
+                            "price": 320,
+                            "imagePath": "images/tiramisu.jpg"
+                        },
+                        {
+                            "id": 402,
+                            "name": "Чизкейк",
+                            "description": "Нью-йоркский чизкейк с ягодным соусом",
+                            "price": 350,
+                            "imagePath": "images/cheescake.jpg"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+            updateCartCount();
+            updateFSMIndicators();
+        });
+
+        // Загрузка категорий
+        function loadCategories() {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+
+            menuData.categories.forEach(category => {
+                if (category.items && category.items.length > 0) {
+                    const card = document.createElement('div');
+                    card.className = 'category-card';
+                    card.onclick = () => selectCategory(category);
+                    card.innerHTML = `
+                        <h3>${category.name}</h3>
+                        <p>${category.description}</p>
+                        <p style="margin-top: 10px; color: #667eea;">${category.items.length} блюд</p>
+                    `;
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        // Выбор категории
+        function selectCategory(category) {
+            selectedCategory = category;
+            loadItems(category);
+            changeState(FSM_STATES.ITEMS);
+        }
+
+        // Загрузка блюд категории
+        function loadItems(category) {
+            const container = document.getElementById('itemsContainer');
+            const title = document.getElementById('selectedCategoryTitle');
+            title.textContent = category.name;
+
+            container.innerHTML = '';
+
+            category.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-image" style="background-image: url('${item.imagePath}')"></div>
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p class="item-description">${item.description}</p>
+                        <div class="item-price">${item.price} ₽</div>
+                        <button class="select-item-btn" onclick="selectItem(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+                            Выбрать
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Выбор блюда
+        function selectItem(item) {
+            selectedItem = item;
+            selectedQuantity = 1;
+            showSelectedItemInfo();
+            changeState(FSM_STATES.QUANTITY);
+        }
+
+        // Показать информацию о выбранном блюде
+        function showSelectedItemInfo() {
+            const container = document.getElementById('selectedItemInfo');
+            container.innerHTML = `
+                <h3>${selectedItem.name}</h3>
+                <p>${selectedItem.description}</p>
+                <p style="font-size: 24px; color: #667eea; margin-top: 10px;">${selectedItem.price} ₽</p>
+            `;
+
+            const confirmContainer = document.getElementById('confirmItemInfo');
+            confirmContainer.innerHTML = `
+                <h3>${selectedItem.name}</h3>
+                <p>${selectedItem.description}</p>
+                <p style="font-size: 18px; margin-top: 10px;">Количество: ${selectedQuantity}</p>
+                <p style="font-size: 24px; color: #667eea; margin-top: 10px;">Итого: ${selectedItem.price * selectedQuantity} ₽</p>
+            `;
+        }
+
+        // Обновление количества
+        function updateQuantity(delta) {
+            const newQuantity = selectedQuantity + delta;
+            if (newQuantity >= 1 && newQuantity <= 99) {
+                selectedQuantity = newQuantity;
+                document.getElementById('quantityValue').textContent = selectedQuantity;
+                showSelectedItemInfo();
+            }
+        }
+
+        // Добавление в корзину (первый шаг)
+        function addToCart() {
+            changeState(FSM_STATES.CONFIRM);
+        }
+
+        // Подтверждение добавления в корзину
+        function confirmAddToCart() {
+            // Создаем элемент корзины
+            const cartItem = {
+                id: selectedItem.id,
+                name: selectedItem.name,
+                price: selectedItem.price,
+                quantity: selectedQuantity,
+                imagePath: selectedItem.imagePath,
+                category: selectedCategory.name
+            };
+
+            // Добавляем в корзину
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем счетчик
+            updateCartCount();
+            
+            // Возвращаемся к категориям
+            selectedItem = null;
+            selectedQuantity = 1;
+            changeState(FSM_STATES.CATEGORIES);
+            
+            // Показываем уведомление
+            alert('Блюдо добавлено в корзину!');
+        }
+
+        // Обновление счетчика корзины
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Смена состояния FSM
+        function changeState(newState) {
+            currentState = newState;
+            
+            // Скрываем все представления
+            document.getElementById('categoriesView').classList.add('hidden');
+            document.getElementById('itemsView').classList.add('hidden');
+            document.getElementById('quantityView').classList.add('hidden');
+            document.getElementById('confirmView').classList.add('hidden');
+            
+            // Показываем нужное представление
+            switch(newState) {
+                case FSM_STATES.CATEGORIES:
+                    document.getElementById('categoriesView').classList.remove('hidden');
+                    document.getElementById('backBtn').style.display = 'none';
+                    break;
+                case FSM_STATES.ITEMS:
+                    document.getElementById('itemsView').classList.remove('hidden');
+                    document.getElementById('backBtn').style.display = 'block';
+                    break;
+                case FSM_STATES.QUANTITY:
+                    document.getElementById('quantityView').classList.remove('hidden');
+                    document.getElementById('backBtn').style.display = 'block';
+                    document.getElementById('quantityValue').textContent = selectedQuantity;
+                    break;
+                case FSM_STATES.CONFIRM:
+                    document.getElementById('confirmView').classList.remove('hidden');
+                    document.getElementById('backBtn').style.display = 'block';
+                    break;
+            }
+            
+            updateFSMIndicators();
+        }
+
+        // Обновление индикаторов FSM
+        function updateFSMIndicators() {
+            const states = ['categories', 'items', 'quantity', 'confirm'];
+            states.forEach(state => {
+                const element = document.getElementById(`state${state.charAt(0).toUpperCase() + state.slice(1)}`);
+                if (currentState === state) {
+                    element.classList.add('active');
+                } else {
+                    element.classList.remove('active');
+                }
+            });
+        }
+
+        // Обработка кнопки "Назад"
+        function handleBack() {
+            switch(currentState) {
+                case FSM_STATES.ITEMS:
+                    changeState(FSM_STATES.CATEGORIES);
+                    break;
+                case FSM_STATES.QUANTITY:
+                    changeState(FSM_STATES.ITEMS);
+                    break;
+                case FSM_STATES.CONFIRM:
+                    changeState(FSM_STATES.QUANTITY);
+                    break;
+                default:
+                    changeState(FSM_STATES.CATEGORIES);
+            }
+        }
+    </script>
+</body>
+</html>
